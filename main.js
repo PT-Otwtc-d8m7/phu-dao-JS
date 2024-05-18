@@ -174,7 +174,7 @@ bai5();
 
 
 function func6(str) {
-    const array1 = str.split(' ');
+    const array1 = str.split(',');
     const int_array = array1.map(Number);
     const sum = int_array.reduce((accumutlator, currentValue) =>  {
         return accumutlator + (currentValue%2 === 0 ? currentValue : 0);
@@ -197,28 +197,19 @@ bai6();
 
 
 function func7(str) {
-    const array1 = str.split('');
-    for(let i = 0; i < array1.length; i++){
-        let asciiValue = array1
-        console.log(getAsciiValues(array1[i])); // Example input
+    var result = "";
+    for (var i = 0; i < str.length; i++) {
+        var charCode = str.charCodeAt(i);
+        if (charCode >= 65 && charCode <= 90) {
+            result += String.fromCharCode((charCode - 65 + 1) % 26 + 65);
+        } else if (charCode >= 97 && charCode <= 122) {
+            result += String.fromCharCode((charCode - 97 + 1) % 26 + 97);
+        } else {
+            result += str[i];
+        }
     }
-    return array1;
+    return result;
 }
-
-function getAsciiValues(str) {
-    const array1 = str.split(''); // Split the string into an array of characters
-    const asciiValues = []; // Array to store ASCII values
-    
-    for (let i = 0; i < array1.length; i++) {
-        const asciiValue = array1[i].charCodeAt(0); // Get ASCII value of each character
-        asciiValues.push(asciiValue);
-    }
-    
-    return asciiValues;
-}
-
-console.log(getAsciiValues('hello')); // Example input
-
 
 function bai7() {
     const btn = document.querySelector('.bai-7 button');
@@ -232,6 +223,7 @@ function bai7() {
 }
 
 bai7();
+
 
 function func8(str) {
     var string = str;
@@ -252,24 +244,135 @@ function bai8() {
 bai8();
 
 
-function func11(str) {
-    const array1 = str.split(' ');
-    const int_array = array1.map(Number);
-    const sum = int_array.reduce((accumutlator, currentValue) =>  {
-        return accumutlator + (currentValue%2 === 0 ? currentValue : 0);
-    }, 0);
-    return sum;
+function func11(arr1, arr2) {
+    return arr1.filter(value => arr2.includes(value));
 }
 
 function bai11() {
-    const btn = document.querySelector('.bai-11 button');
-    const input = document.querySelector('.bai-11 input');
-    const result = document.querySelector('.bai-11 .result');
+    const submitBtn = document.getElementById('submitBtn');
+    const arr1Input = document.getElementById('arr1');
+    const arr2Input = document.getElementById('arr2');
+    const resultDiv = document.querySelector('.bai-11 .result');
     
-    btn.addEventListener('click', function() {
-        const value = func11(input.value);
-        result.innerText = value;
+    submitBtn.addEventListener('click', function() {
+        const arr1 = arr1Input.value.split(',');
+        const arr2 = arr2Input.value.split(',');
+        
+        const value = func11(arr1, arr2);
+        resultDiv.innerText = value; 
     });
 }
 
-bai11();
+document.addEventListener('DOMContentLoaded', function() {
+    bai11();
+});
+
+
+function findUniqueElements(arr1, arr2) {
+    const uniqueArr1 = arr1.filter(item => !arr2.includes(item));
+    const uniqueArr2 = arr2.filter(item => !arr1.includes(item));
+    return [...uniqueArr1, ...uniqueArr2];
+}
+
+function bai12() {
+    const submitBtn = document.getElementById('submitBtn');
+    const arr1Input = document.getElementById('arr1');
+    const arr2Input = document.getElementById('arr2');
+    const resultDiv = document.querySelector('.bai-12 .result');
+    
+    submitBtn.addEventListener('click', function() {
+        const arr1 = arr1Input.value.split(',').map(item => item.trim()); 
+        const arr2 = arr2Input.value.split(',').map(item => item.trim());
+        
+        const uniqueArr = findUniqueElements(arr1, arr2);
+        
+        resultDiv.innerText = 'Mảng mới: ' + uniqueArr.join(', ');
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    bai12();
+});
+
+
+function findUniqueElements(arr1, arr2) {
+    const uniqueArr1 = arr1.filter(item => !arr2.includes(item));
+    const uniqueArr2 = arr2.filter(item => !arr1.includes(item));
+    return [...uniqueArr1, ...uniqueArr2];
+}
+
+function bai13() {
+    const submitBtn = document.getElementById('submitBtn');
+    const arr1Input = document.getElementById('arr1');
+    const arr2Input = document.getElementById('arr2');
+    const resultDiv = document.querySelector('.bai-13 .result');
+    
+    submitBtn.addEventListener('click', function() {
+        const arr1 = arr1Input.value.split(',').map(item => item.trim());
+        const arr2 = arr2Input.value.split(',').map(item => item.trim());
+        
+        const uniqueArr = findUniqueElements(arr1, arr2);
+        
+        resultDiv.innerText = 'Kết quả: ' + uniqueArr.join(', ');
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    bai13();
+});
+
+
+function filterAndSquareOddNumbers(str) {
+    const numbers = str.split(',').map(Number);
+    const result = numbers.filter(num => num % 2 !== 0).map(num => num * num);
+    return result;
+}
+
+function bai16() {
+    const submitBtn = document.getElementById('submitBtn');
+    const numbersInput = document.getElementById('numbersInput');
+    const resultDiv = document.querySelector('.bai-16 .result');
+
+    submitBtn.addEventListener('click', function() {
+        const value = filterAndSquareOddNumbers(numbersInput.value);
+        resultDiv.innerHTML = '<b>Kết quả:</b> ' + value.join(', ');
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    bai16();
+});
+
+
+function calculate() {
+    const inputNumbers = document.getElementById("numbersInput").value;
+    const numbersArray = inputNumbers.split(",").map(Number);
+    const oddNumbers = numbersArray.filter(num => num % 2 !== 0);
+    const squaredNumbers = oddNumbers.map(num => num ** 2);
+
+    const resultDiv = document.getElementById("resultDiv");
+    resultDiv.textContent = "Squared odd numbers: " + squaredNumbers.join(", ");
+}
+
+function calculateAverage() {
+    const inputNumbers = document.getElementById("numbersInput").value;
+    const numbersArray = inputNumbers.split(",").map(Number);
+    const sum = numbersArray.reduce((partialSum, num) => partialSum + num, 0);
+    const average = sum / numbersArray.length;
+
+    const resultDiv = document.getElementById("resultDiv");
+    resultDiv.textContent = `Average: ${average.toFixed(2)}`;
+}
+
+function calculateAverage(numbers) {
+    const sum = numbers.reduce((acc, curr) => acc + curr, 0);
+    const average = sum / numbers.length;
+    return average;
+}
+
+
+
+
+
+
+
